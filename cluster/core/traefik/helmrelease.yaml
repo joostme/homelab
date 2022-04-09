@@ -18,7 +18,7 @@ spec:
     - "--global.checknewversion=true"
     - "--global.sendanonymoususage=false"
 
-    additionalArguments: 
+    additionalArguments:
     - "--serversTransport.insecureSkipVerify=true"
     - "--certificatesResolvers.letsencrypt.acme.email=mail@${SECRET_DOMAIN}"
     - "--certificatesResolvers.letsencrypt.acme.storage=/certs/acme.json"
@@ -28,17 +28,11 @@ spec:
     - "--entrypoints.websecure.http.tls.domains[0].sans=*.${SECRET_DOMAIN}"
 
     # Environment variables to be passed to Traefik's binary
-    env: 
+    env:
     - name: NAMECHEAP_API_USER
-      valueFrom:
-        secretKeyRef:
-          name: namecheap-api-credentials
-          key: user
+      value: ${SECRET_NAMECHEAP_USER}
     - name: NAMECHEAP_API_KEY
-      valueFrom:
-        secretKeyRef:
-          name: namecheap-api-credentials
-          key: key
+      value: ${SECRET_NAMECHEAP_API_KEY}
 
     ports:
       web:
