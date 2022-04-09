@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: traefik
+      version: 10.19.4
+      sourceRef:
+        kind: HelmRepository
+        name: traefik-charts
+        namespace: flux-system
+  values:
+    globalArguments:
+    - "--global.checknewversion=true"
+    - "--global.sendanonymoususage=false"
+
+    additionalArguments: 
+    - "--serversTransport.insecureSkipVerify=true"
+    - "--certificatesResolvers.letsencrypt.acme.email=mail@${SECRET_DOMAIN}"
+    - "--certificatesResolvers.letsencrypt.acme.storage=/certs/acme.json"
+    - "--certificatesResolvers.letsencrypt.acme.dnschallenge.provider=namecheap"
+    - "--entrypoints.websecure.http.tls.certresolver=letsencrypt"
+    - "--entrypoints.websecure.http.tls.domains[0].main=${SECRET_DOMAIN}"
+    - "--entrypoints.websecure.http.tls.domains[0].sans=*.${SECRET_DOMAIN}"
+
+    # Environment variables to be passed to Traefik's binary
+    env: 
+    - name: NAMECHEAP_API_USER
+      valueFrom:
+        secretKeyRef:
+          name: namecheap-api-credentials
+          key: user
+    - name: NAMECHEAP_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: namecheap-api-credentials
+          key: key
+
+    ports:
+      web:
+        redirectTo: websecure
+
+    persistence:
+      enabled: true
+      size: 128Mi
+      path: /certs
