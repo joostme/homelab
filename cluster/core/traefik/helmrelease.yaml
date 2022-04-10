@@ -27,6 +27,15 @@ spec:
     - "--entrypoints.websecure.http.tls.domains[0].main=${SECRET_DOMAIN}"
     - "--entrypoints.websecure.http.tls.domains[0].sans=*.${SECRET_DOMAIN}"
 
+    deployment:
+      initContainers:
+      - name: volume-permissions
+        image: busybox:1.35.0
+        command: ["sh", "-c", "chmod -Rv 600 /certs/*"]
+        volumeMounts:
+          - name: data
+            mountPath: /certs
+
     # Environment variables to be passed to Traefik's binary
     env:
     - name: NAMECHEAP_API_USER
