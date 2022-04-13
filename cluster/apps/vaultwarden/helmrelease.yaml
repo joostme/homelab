@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+  namespace: vaultwarden-app
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: vaultwarden
+      version: 4.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    env:
+      DATA_FOLDER: "config"
+      SIGNUPS_ALLOWED: false
+      ADMIN_TOKEN: ${SECRET_VAULTWARDEN_ADMIN_TOKEN}
+    persistence:
+      config:
+        enabled: true
+        storageClass: longhorn
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: vault.${SECRET_DOMAIN}
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+              port: 80
+          - path: /notifications/hub/negotiate
+            pathType: Prefix
+            service:
+              port: 80
+          - path: /notifications/hub
+            pathType: Prefix
+            service:
+              port: 3012
