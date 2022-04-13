@@ -22,7 +22,7 @@ spec:
     - "--serversTransport.insecureSkipVerify=true"
     - "--certificatesResolvers.letsencrypt.acme.email=mail@${SECRET_DOMAIN}"
     - "--certificatesResolvers.letsencrypt.acme.storage=/certs/acme.json"
-    - "--certificatesResolvers.letsencrypt.acme.dnschallenge.provider=namecheap"
+    - "--certificatesResolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
     - "--entrypoints.websecure.http.tls.certresolver=letsencrypt"
     - "--entrypoints.websecure.http.tls.domains[0].main=${SECRET_DOMAIN}"
     - "--entrypoints.websecure.http.tls.domains[0].sans=*.${SECRET_DOMAIN}"
@@ -38,10 +38,8 @@ spec:
 
     # Environment variables to be passed to Traefik's binary
     env:
-    - name: NAMECHEAP_API_USER
-      value: ${SECRET_NAMECHEAP_USER}
-    - name: NAMECHEAP_API_KEY
-      value: ${SECRET_NAMECHEAP_API_KEY}
+    - name: CF_DNS_API_TOKEN
+      value: ${SECRET_CLOUDFLARE_API_TOKEN}
 
     ports:
       web:
