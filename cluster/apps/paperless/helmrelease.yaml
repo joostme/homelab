@@ -1,0 +1,65 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: paperless
+  namespace: paperless-app
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: paperless
+      version: 8.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    env:
+      PAPERLESS_OCR_LANGUAGE: deu
+      PAPERLESS_TIME_ZONE: "Europe/Berlin"
+      PAPERLESS_CONSUMER_POLLING: "60"
+      PAPERLESS_ADMIN_USER: admin
+      PAPERLESS_ADMIN_PASSWORD: ${SECRET_PAPERLESS_ADMIN_PASSWORD}
+      PAPERLESS_REDIS: redis://127.0.0.1:6379
+
+    ingress:
+      main:
+        enabled: true
+        hosts:
+          - host: "paperless.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+
+    persistence:
+      data:
+        enabled: true
+        storageClass: longhorn
+        size: 100Mi
+      media:
+        enabled: true
+        storageClass: longhorn
+        size: 5Gi
+      consume:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${SECRET_NAS_ADDRESS}"
+            path: /paperless/consume
+        mountPath: /usr/src/paperless/consume
+      export:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${SECRET_NAS_ADDRESS}"
+            path: /paperless/export
+        mountPath: /usr/src/paperless/export
+
+    additionalContainers:
+      - name: broker
+        image: redis:6.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6379
