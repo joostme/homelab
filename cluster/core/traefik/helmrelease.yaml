@@ -41,6 +41,10 @@ spec:
     - name: CF_DNS_API_TOKEN
       value: ${SECRET_CLOUDFLARE_API_TOKEN}
 
+    service:
+      annotations:
+        metallb.universe.tf/loadBalancerIPs: ${TRAEFIK_LB_ADDRESS}
+
     ports:
       web:
         redirectTo: websecure

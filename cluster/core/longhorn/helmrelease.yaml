@@ -20,3 +20,4 @@ spec:
     defaultSettings:
       backupTarget: ${SECRET_BACKBLAZE_BACKUP_TARGET}
       backupTargetCredentialSecret: backblaze-credentials
+      backupstorePollInterval: 3600 #every hour

@@ -6,6 +6,10 @@ metadata:
 data:
   # Cluster configuration
   METALLB_RANGE: 10.0.0.240-10.0.0.250
+  TRAEFIK_LB_ADDRESS: 10.0.0.240
+  HASS_LB_ADDRESS: 10.0.0.241
+  UNIFI_LB_ADDRESS: 10.0.0.242
+  ADGUARD_LB_ADDRESS: 10.0.0.243
 
   # Network
   GATEWAY_ADDR: 10.0.0.1
