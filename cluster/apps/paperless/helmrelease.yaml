@@ -46,7 +46,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${SECRET_NAS_ADDRESS}"
-            path: /paperless/consume
+            path: /share/paperless/consume
         mountPath: /usr/src/paperless/consume
       export:
         enabled: true
@@ -54,7 +54,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${SECRET_NAS_ADDRESS}"
-            path: /paperless/export
+            path: /share/paperless/export
         mountPath: /usr/src/paperless/export
 
     additionalContainers:
