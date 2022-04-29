@@ -74,6 +74,6 @@ spec:
     persistence:
       data:
         enabled: true
-        storageClass: longhorn
+        storageClass: longhorn-encrypted
         size: 1Gi
         accessMode: ReadWriteOnce

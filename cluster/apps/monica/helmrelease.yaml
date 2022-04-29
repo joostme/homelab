@@ -35,7 +35,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: longhorn
+        storageClass: longhorn-encrypted
 
     mariadb:
       enabled: true
@@ -50,5 +50,5 @@ spec:
 
         persistence:
           enabled: true
-          storageClass: longhorn
+          storageClass: longhorn-encrypted
           size: 2Gi

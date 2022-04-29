@@ -38,5 +38,5 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: longhorn
+        storageClass: longhorn-encrypted
         size: 500Mi

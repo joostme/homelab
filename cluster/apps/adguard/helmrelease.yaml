@@ -41,7 +41,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: longhorn
+        storageClass: longhorn-encrypted
         size: 100Mi
         accessMode: ReadWriteOnce
 
@@ -116,7 +116,21 @@ spec:
         parental_cache_size: 1048576
         cache_time: 30
         rewrites:
-        - domain: "*.${SECRET_DOMAIN}"
+        - domain: "adguard.${SECRET_DOMAIN}"
+          answer: ${TRAEFIK_LB_ADDRESS}
+        - domain: "calibre.${SECRET_DOMAIN}"
+          answer: ${TRAEFIK_LB_ADDRESS}
+        - domain: "homeassistant.${SECRET_DOMAIN}"
+          answer: ${TRAEFIK_LB_ADDRESS}
+        - domain: "monica.${SECRET_DOMAIN}"
+          answer: ${TRAEFIK_LB_ADDRESS}
+        - domain: "paperless.${SECRET_DOMAIN}"
+          answer: ${TRAEFIK_LB_ADDRESS}
+        - domain: "unifi.${SECRET_DOMAIN}"
+          answer: ${TRAEFIK_LB_ADDRESS}
+        - domain: "vault.${SECRET_DOMAIN}"
+          answer: ${TRAEFIK_LB_ADDRESS}
+        - domain: "longhorn.${SECRET_DOMAIN}"
           answer: ${TRAEFIK_LB_ADDRESS}
         - domain: unifi
           answer: ${UNIFI_LB_ADDRESS}
