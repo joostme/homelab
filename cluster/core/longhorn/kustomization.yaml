@@ -5,3 +5,5 @@ resources:
 - secret.yaml
 - helmrelease.yaml
 - recurring-job.yaml
+- encrypted-secret.yaml
+- encrypted-storage.yaml

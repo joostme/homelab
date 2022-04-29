@@ -34,11 +34,11 @@ spec:
     persistence:
       data:
         enabled: true
-        storageClass: longhorn
+        storageClass: longhorn-encrypted
         size: 100Mi
       media:
         enabled: true
-        storageClass: longhorn
+        storageClass: longhorn-encrypted
         size: 5Gi
       consume:
         enabled: true
