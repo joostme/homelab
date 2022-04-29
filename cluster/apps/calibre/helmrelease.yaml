@@ -14,11 +14,15 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
   values:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+
     image:
       tag: version-0.6.18
 
     env:
       TZ: "Europe/Berlin"
+      DOCKER_MODS: linuxserver/calibre-web:calibre
 
     ingress:
       main:
