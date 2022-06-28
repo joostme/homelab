@@ -18,6 +18,6 @@ spec:
       enabled: true
       host: longhorn.${SECRET_DOMAIN}
     defaultSettings:
-      backupTarget: ${SECRET_BACKBLAZE_BACKUP_TARGET}
-      backupTargetCredentialSecret: backblaze-credentials
+      backupTarget: ${SECRET_MINIO_BACKUP_TARGET}
+      backupTargetCredentialSecret: minio-credentials
       backupstorePollInterval: 3600 #every hour
