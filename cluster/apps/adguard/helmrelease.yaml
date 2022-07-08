@@ -132,6 +132,8 @@ spec:
           answer: ${TRAEFIK_LB_ADDRESS}
         - domain: "longhorn.${SECRET_DOMAIN}"
           answer: ${TRAEFIK_LB_ADDRESS}
+        - domain: "sabnzbd.${SECRET_DOMAIN}"
+          answer: ${TRAEFIK_LB_ADDRESS}
         - domain: unifi
           answer: ${UNIFI_LB_ADDRESS}
         blocked_services: []
